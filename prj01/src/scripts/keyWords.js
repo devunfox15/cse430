@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener("DOMContentLoaded", function () {
     var words = [
         "I am passionate about web development",
         "My major is software engineering",
@@ -10,9 +10,8 @@ document.addEventListener('DOMContentLoaded', function () {
         "I Speak Spanish",
         "I code in 5 coding languages"
     ];
-    var keyWordsElement = document.querySelector('.KeyWords');
-    if (!keyWordsElement)
-        return;
+    var keyWordsElement = document.querySelector(".KeyWords");
+    if (!keyWordsElement) return;
     var currentIndex = 0; // Track the current word in the array
     var periodCount = 0; // Number of periods to display after the word
     var periodInterval = undefined;
@@ -34,13 +33,12 @@ document.addEventListener('DOMContentLoaded', function () {
         periodInterval = window.setInterval(function () {
             if (periodCount < 3) {
                 periodCount++;
-                var periods = ''; // Manually construct the period string
+                var periods = ""; // Manually construct the period string
                 for (var i = 0; i < periodCount; i++) {
-                    periods += '.';
+                    periods += ".";
                 }
                 keyWordsElement.textContent = words[currentIndex] + periods;
-            }
-            else {
+            } else {
                 clearInterval(periodInterval); // Stop when reaching 3 periods
                 periodInterval = undefined; // Reset to undefined
             }
