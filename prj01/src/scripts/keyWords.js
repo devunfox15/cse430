@@ -8,44 +8,46 @@ document.addEventListener('DOMContentLoaded', function () {
         "I am a Team Leader",
         "I am a Creative Thinker",
         "I Speak Spanish",
-        "I code in 5 coding languages",
-        ""
+        "I code in 5 coding languages"
     ];
     var keyWordsElement = document.querySelector('.KeyWords');
     if (!keyWordsElement)
-        return; // Make sure the element exists
-    var currentIndex = 0; // Start with the first word
-    var periodCount = 0; // Keep track of how many periods to display
-    var periodInterval;
+        return;
+    var currentIndex = 0; // Track the current word in the array
+    var periodCount = 0; // Number of periods to display after the word
+    var periodInterval = undefined;
     // Function to change the word
     function changeWord() {
-        // Update the content of the KeyWords element with the current word and reset periods
+        // Update the content of the KeyWords element with the current word
         keyWordsElement.textContent = words[currentIndex];
-        // Move to the next word, and loop back to the start if at the end
+        // Move to the next word and loop back to the start if needed
         currentIndex = (currentIndex + 1) % words.length;
-        if (currentIndex === 0) {
-            currentIndex = 1;
-        }
         // Reset the period count and start showing periods
         periodCount = 0;
         startPeriodEffect();
     }
-    // Function to start showing periods
+    // Function to start showing periods after each word
     function startPeriodEffect() {
-        clearInterval(periodInterval); // Clear any previous period intervals
+        if (periodInterval !== undefined) {
+            clearInterval(periodInterval); // Only clear if an interval exists
+        }
         periodInterval = window.setInterval(function () {
             if (periodCount < 3) {
-                periodCount++; // Add periods
-                function repeatString(str, count) {
-                    return new Array(count + 1).join(str);
+                periodCount++;
+                var periods = ''; // Manually construct the period string
+                for (var i = 0; i < periodCount; i++) {
+                    periods += '.';
                 }
-                keyWordsElement.textContent = words[currentIndex - 1] + repeatString('.', periodCount);
+                keyWordsElement.textContent = words[currentIndex] + periods;
             }
             else {
                 clearInterval(periodInterval); // Stop when reaching 3 periods
+                periodInterval = undefined; // Reset to undefined
             }
         }, 1000);
     }
+    // Start the initial word change and period effect
     changeWord();
+    // Continue changing the word every 4 seconds
     setInterval(changeWord, 4000);
 });
